@@ -1,7 +1,8 @@
 import React from "react";
 import { data } from "./data";
+import Result from "./Result";
 
-const Demo = () => {
+const Task = () => {
   function splitStringByLineBreak(inputString) {
     return inputString.split("\n");
   }
@@ -43,13 +44,9 @@ const Demo = () => {
     return combinedNumber;
   }
 
-  //console.log("pairs", numberPairs);
-
   numberPairs.forEach((element) => {
     combineDigits(element);
   });
-
-  // console.log("numbers to reduce ", combined);
 
   function sumArray(numbers) {
     if (!Array.isArray(numbers)) {
@@ -61,11 +58,7 @@ const Demo = () => {
 
   const result = sumArray(combined);
 
-  return <div>Result is {result}</div>;
+  return <Result result={result} />;
 };
 
-export default Demo;
-
-export function splitStringByLineBreak(inputString) {
-  return inputString.split("\n");
-}
+export default Task;
