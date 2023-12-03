@@ -1,11 +1,11 @@
+import "./App.css";
 
-import './App.css';
-import Demo from './Demo'
+import Task from "./Task";
 
 function App() {
   return (
     <div>
-  <Demo />
+      <Task />
     </div>
   );
 }

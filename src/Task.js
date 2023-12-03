@@ -1,7 +1,8 @@
 import React from "react";
 import { data } from "./data";
+import Result from "./Result";
 
-const Demo = () => {
+const Task = () => {
   function splitStringByLineBreak(inputString) {
     return inputString.split("\n");
   }
@@ -57,7 +58,7 @@ const Demo = () => {
 
   const result = sumArray(combined);
 
-  return <div>Result is {result}.</div>;
+  return <Result result={result} />;
 };
 
-export default Demo;
+export default Task;
