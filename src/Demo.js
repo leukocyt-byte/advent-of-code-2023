@@ -2,13 +2,28 @@ import React from "react";
 import { data } from "./data";
 
 const Demo = () => {
-  function splitStringByLineBreak(inputString) {
-    return inputString.split("\n");
-  }
-  const myArray = splitStringByLineBreak(data);
-  let numberPairs = [];
+  const splitStringByLineBreak = (inputString) => inputString.split("\n");
 
-  function findFirstAndLastDigitsAsString(inputString) {
+  const replaceWordsWithDigits = (inputString, wordToDigitMap) => {
+    let replacedString = inputString;
+    let replacementsMade = false;
+
+    Object.keys(wordToDigitMap).forEach((word) => {
+      let index = replacedString.indexOf(word);
+      while (index !== -1) {
+        replacedString =
+          replacedString.slice(0, index) +
+          wordToDigitMap[word] +
+          replacedString.slice(index + word.length);
+        index = replacedString.indexOf(word, index + 1);
+        replacementsMade = true;
+      }
+    });
+
+    return replacementsMade ? replacedString : inputString;
+  };
+
+  const findFirstAndLastDigitsAsString = (inputString) => {
     const numbers = inputString.match(/\d+/g);
 
     if (!numbers || numbers.length === 0) {
@@ -20,36 +35,57 @@ const Demo = () => {
 
     const firstDigit = firstNumber.charAt(0);
     const lastDigit = lastNumber.charAt(lastNumber.length - 1);
-    numberPairs.push([firstDigit, lastDigit]);
-    return firstDigit + lastDigit;
-  }
 
-  myArray.forEach((element) => {
-    findFirstAndLastDigitsAsString(element);
-  });
-  let combined = [];
-  function combineDigits(strings) {
+    return firstDigit + lastDigit;
+  };
+
+  const combineDigits = (strings) => {
     if (strings.length !== 2) {
       throw new Error("Input array must contain exactly two strings.");
     }
 
     if (strings[0] === "0") {
-      combined.push(strings[1]);
       return strings[1];
     }
 
     const combinedNumber = parseInt(strings[0] + strings[1]);
-    combined.push(combinedNumber);
+
     return combinedNumber;
-  }
+  };
 
-  //console.log("pairs", numberPairs);
+  const consolidated = (stringItem, wordToDigitMap) => {
+    const replacedString = replaceWordsWithDigits(stringItem, wordToDigitMap);
+    const digits = findFirstAndLastDigitsAsString(replacedString);
+    return combineDigits(digits);
+  };
 
-  numberPairs.forEach((element) => {
-    combineDigits(element);
-  });
+  const myArray = splitStringByLineBreak(data);
 
-  // console.log("numbers to reduce ", combined);
+  const wordToDigitMap = {
+    oneight: "18",
+    threeight: "38",
+    fiveight: "58",
+    nineight: "98",
+    sevenine: "79",
+    eighthree: "83",
+    eightwo: "82",
+    twone: "21",
+    one: "1",
+    two: "2",
+    three: "3",
+    four: "4",
+    five: "5",
+    six: "6",
+    seven: "7",
+    eight: "8",
+    nine: "9",
+  };
+
+  const translatedData = myArray.map((item) =>
+    consolidated(item, wordToDigitMap)
+  );
+
+  const result = sumArray(translatedData);
 
   function sumArray(numbers) {
     if (!Array.isArray(numbers)) {
@@ -59,13 +95,7 @@ const Demo = () => {
     return numbers.reduce((sum, num) => sum + num, 0);
   }
 
-  const result = sumArray(combined);
-
-  return <div>Result is {result}</div>;
+  return <div>Result is {result}.</div>;
 };
 
 export default Demo;
-
-export function splitStringByLineBreak(inputString) {
-  return inputString.split("\n");
-}
