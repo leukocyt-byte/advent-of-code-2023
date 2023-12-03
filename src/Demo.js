@@ -43,13 +43,9 @@ const Demo = () => {
     return combinedNumber;
   }
 
-  //console.log("pairs", numberPairs);
-
   numberPairs.forEach((element) => {
     combineDigits(element);
   });
-
-  // console.log("numbers to reduce ", combined);
 
   function sumArray(numbers) {
     if (!Array.isArray(numbers)) {
@@ -61,11 +57,7 @@ const Demo = () => {
 
   const result = sumArray(combined);
 
-  return <div>Result is {result}</div>;
+  return <div>Result is {result}.</div>;
 };
 
 export default Demo;
-
-export function splitStringByLineBreak(inputString) {
-  return inputString.split("\n");
-}
